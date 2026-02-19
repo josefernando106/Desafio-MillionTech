@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>Entrar</h2>
+        <h2>Entrar 2</h2>
         <form onSubmit={submit}>
           <input
             placeholder="Email"
