@@ -84,3 +84,17 @@
   background: #eee;
   color: #333;
 }
+
+/* Clients table tweaks */
+table td, table th {
+  padding: 8px 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+table tr td button {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+table tr td button:first-child { background: #646cff; color: white }
+table tr td button:last-child { background: #eee; margin-left: 8px }
