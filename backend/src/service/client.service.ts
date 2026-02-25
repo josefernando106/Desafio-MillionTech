@@ -1,5 +1,5 @@
 import { clientRepo } from '../repositoires/cliente.repository.js';
-import { Client } from '../entities/Client.js';
+import { Client } from '../entities/Clients.js';
 
 export class ClientService {
   async create(data: Pick<Client, 'name' | 'email' | 'phone'>) {

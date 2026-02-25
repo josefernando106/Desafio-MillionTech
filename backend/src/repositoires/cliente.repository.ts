@@ -1,4 +1,4 @@
-import { AppDataSource } from '../database/data-source';
-import { Client } from '../entities/Client';
+import { AppDataSource } from '../database/data-source.js';
+import { Client } from '../entities/Clients.js';
 
 export const clientRepo = () => AppDataSource.getRepository(Client);

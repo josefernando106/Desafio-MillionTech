@@ -1,6 +1,6 @@
-import { AppDataSource } from '../database/data-source';
+import { AppDataSource } from '../database/data-source.js';
 import bcrypt from 'bcrypt';
-import { User } from '../entities/User';
+import { User } from '../entities/User.js';
 
 async function run() {
   await AppDataSource.initialize();

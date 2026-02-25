@@ -64,6 +64,14 @@ export function ClientForm() {
   )
 }
 function useClientsStorage() {
-    throw new Error('Function not implemented.')
+  return {
+    load: () => {
+      const data = localStorage.getItem('clients')
+      return data ? JSON.parse(data) : []
+    },
+    save: (clients: Client[]) => {
+      localStorage.setItem('clients', JSON.stringify(clients))
+    }
+  }
 }
 

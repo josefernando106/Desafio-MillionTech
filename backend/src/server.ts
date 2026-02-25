@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-import { env } from './config/env';
-import { AppDataSource } from './database/data-source';
-import routes from './routes/index';
+import { env } from './config/env.js';
+import { AppDataSource } from './database/data-source.js';
+import routes from './routes/index.js';
 
 async function bootstrap() {
   await AppDataSource.initialize();
