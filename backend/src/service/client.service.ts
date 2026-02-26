@@ -24,5 +24,14 @@ export class ClientService {
     Object.assign(client, data);
     return repo.save(client);
   }
+
+  async delete(id: string) {
+    const repo = clientRepo();
+    const client = await repo.findOne({ where: { id } });
+    if (!client) return null;
+
+    await repo.remove(client);
+    return client;
+  }
 }
 ``

@@ -28,4 +28,10 @@ export class ClientController {
     if (!updated) return res.status(404).json({ error: 'not found' });
     return res.json(updated);
   }
+
+  async delete(req: Request, res: Response) {
+    const deleted = await service.delete(req.params.id as string);
+    if (!deleted) return res.status(404).json({ error: 'not found' });
+    return res.status(204).send();
+  }
 }

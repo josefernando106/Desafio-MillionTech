@@ -4,6 +4,8 @@ import cors from 'cors';
 import { env } from './config/env.js';
 import { AppDataSource } from './database/data-source.js';
 import routes from './routes/index.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 
 async function bootstrap() {
   await AppDataSource.initialize();
@@ -24,9 +26,12 @@ async function bootstrap() {
   app.listen(env.port, () => {
     console.log(`API on :${env.port}`);
   });
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
 bootstrap().catch((e) => {
   console.error('BOOTSTRAP_ERROR', e);
   process.exit(1);
 });
+
+

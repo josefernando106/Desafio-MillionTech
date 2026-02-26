@@ -11,5 +11,6 @@ route.post('/clients', (req, res) => controllerClient.create(req, res));
 route.get('/clients', (req, res) => controllerClient.list(req, res));
 route.get('/clients/:id', (req, res) => controllerClient.get(req, res));
 route.put('/clients/:id', (req, res) => controllerClient.update(req, res));
+route.delete('/clients/:id', (req, res) => controllerClient.delete(req, res));
 
 export default route;
