@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, type ReactNode, useEffect } from 'react'
+import { apiClient } from '../services/api'
 
 type User = {
   name: string
-  email: string
 }
 
 type AuthContextType = {
   user: User | null
-  login: (email: string, password: string) => Promise<void>
+  loading: boolean
+  login: (username: string, password: string) => Promise<void>
   logout: () => void
 }
 
@@ -15,22 +16,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const raw = localStorage.getItem('user')
     if (raw) setUser(JSON.parse(raw))
+    setLoading(false)
   }, [])
 
-  const login = async (email: string, password: string) => {
-    // Simple fixed credential check (admin / admin)
-    await new Promise((r) => setTimeout(r, 300))
-    const ok = (email === 'admin' || email === 'admin@admin.com' || email === 'admin@admin') && password === 'admin'
-    if (!ok) throw new Error('Credenciais inválidas')
-    const u = { name: 'admin', email: 'admin' }
+  const login = async (username: string, password: string) => {
+    const { token } = await apiClient.login(username, password)
+    const u = { name: username }
     setUser(u)
-    // store user and a simple token in localStorage
     localStorage.setItem('user', JSON.stringify(u))
-    localStorage.setItem('token', 'fake-jwt-token')
+    localStorage.setItem('token', token)
   }
 
   const logout = () => {
@@ -40,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

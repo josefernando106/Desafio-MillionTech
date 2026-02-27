@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -83,6 +83,57 @@
 .login-card .secondary {
   background: #eee;
   color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: #1a1a2e;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.navbar-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #646cff;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar-right span {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+.navbar-right button {
+  padding: 0.4rem 1rem;
+  border: 1px solid #646cff;
+  background: transparent;
+  color: #646cff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, color 0.2s;
+}
+.navbar-right button:hover {
+  background: #646cff;
+  color: #fff;
 }
 
 /* Clients table tweaks */

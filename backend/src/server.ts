@@ -14,9 +14,7 @@ async function bootstrap() {
   
   // Middleware
   app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? 'http://localhost' 
-      : ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost'],
     credentials: true,
   }));
   app.use(express.json());

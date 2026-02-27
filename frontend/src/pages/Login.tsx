@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -15,7 +15,7 @@ export default function Login() {
     setError(null)
     setLoading(true)
     try {
-      await auth.login(email, password)
+      await auth.login(username, password)
       navigate('/')
     } catch (err: any) {
       setError(err?.message || 'Erro ao autenticar')
@@ -27,13 +27,13 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>Entrar 2</h2>
+        <h2>Entrar</h2>
         <form onSubmit={submit}>
           <input
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
+            placeholder="Usuário"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
             required
           />
           <input

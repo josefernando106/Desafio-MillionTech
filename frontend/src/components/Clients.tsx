@@ -1,61 +1,58 @@
-'use client'
 import { useNavigate, useParams } from 'react-router-dom'
-import type { Client } from './Forms'
 import { useEffect, useState } from 'react'
-
+import { apiClient } from '../services/api'
 
 export function ClientForm() {
-  const storage = useClientsStorage()
   const { id } = useParams()
   const navigate = useNavigate()
-  const [clients, setClients] = useState<Client[]>([])
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
-
-  useEffect(() => setClients(storage.load()), [])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (id) {
-      const c = clients.find((x) => x.id === id)
-      if (c) {
+      apiClient.getClient(id).then((c) => {
         setName(c.name)
         setEmail(c.email)
         setPhone(c.phone || '')
-        setAddress(c.address || '')
-      }
+      }).catch((err) => {
+        setError(err?.message || 'Erro ao carregar cliente')
+      })
     }
-  }, [id, clients])
+  }, [id])
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const next = [...clients]
-    if (id) {
-      const idx = next.findIndex((x) => x.id === id)
-      if (idx >= 0) {
-        next[idx] = { id, name, email, phone, address }
+    setError(null)
+    setLoading(true)
+    try {
+      if (id) {
+        await apiClient.updateClient(id, { name, email, phone: phone || undefined })
+      } else {
+        await apiClient.createClient({ name, email, phone: phone || undefined })
       }
-    } else {
-      const newClient: Client = { id: String(Date.now()), name, email, phone, address }
-      next.push(newClient)
+      navigate('/clients')
+    } catch (err: any) {
+      setError(err?.message || 'Erro ao salvar cliente')
+    } finally {
+      setLoading(false)
     }
-    storage.save(next)
-    navigate('/clients')
   }
 
   return (
     <div className="login-container">
       <div className="login-card">
         <h2>{id ? 'Editar cliente' : 'Novo cliente'}</h2>
+        {error && <div style={{ color: 'crimson', marginBottom: 12 }}>{error}</div>}
         <form onSubmit={submit}>
           <input placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} required />
           <input placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
           <input placeholder="Telefone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-          <input placeholder="Endereço" value={address} onChange={(e) => setAddress(e.target.value)} />
           <div style={{ display: 'flex', gap: 8 }}>
-            <button type="submit">Salvar</button>
+            <button type="submit" disabled={loading}>{loading ? 'Salvando...' : 'Salvar'}</button>
             <button type="button" className="secondary" onClick={() => navigate('/clients')}>Cancelar</button>
           </div>
         </form>
@@ -63,15 +60,3 @@ export function ClientForm() {
     </div>
   )
 }
-function useClientsStorage() {
-  return {
-    load: () => {
-      const data = localStorage.getItem('clients')
-      return data ? JSON.parse(data) : []
-    },
-    save: (clients: Client[]) => {
-      localStorage.setItem('clients', JSON.stringify(clients))
-    }
-  }
-}
-

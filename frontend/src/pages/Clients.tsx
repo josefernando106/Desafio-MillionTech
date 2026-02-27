@@ -2,21 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, Routes, Route } from 'react-router-dom'
 import type { Client } from '../components/Forms'
 import { ClientForm } from '../components/Clients'
-
-
-function useClientsStorage() {
-  const key = 'clients'
-  const load = (): Client[] => {
-    try {
-      const raw = localStorage.getItem(key)
-      return raw ? JSON.parse(raw) : []
-    } catch {
-      return []
-    }
-  }
-  const save = (items: Client[]) => localStorage.setItem(key, JSON.stringify(items))
-  return { load, save }
-}
+import { apiClient } from '../services/api'
 
 export default function Clients() {
   return (
@@ -29,16 +15,32 @@ export default function Clients() {
 }
 
 function ClientsList() {
-  const storage = useClientsStorage()
   const [clients, setClients] = useState<Client[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  useEffect(() => setClients(storage.load()), [])
+  const fetchClients = async () => {
+    try {
+      setLoading(true)
+      const data = await apiClient.getClients()
+      setClients(data)
+    } catch (err: any) {
+      setError(err?.message || 'Erro ao carregar clientes')
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  const remove = (id: string) => {
-    const next = clients.filter((c) => c.id !== id)
-    setClients(next)
-    storage.save(next)
+  useEffect(() => { fetchClients() }, [])
+
+  const remove = async (id: string) => {
+    try {
+      await apiClient.deleteClient(id)
+      setClients(clients.filter((c) => c.id !== id))
+    } catch (err: any) {
+      setError(err?.message || 'Erro ao remover cliente')
+    }
   }
 
   return (
@@ -51,7 +53,10 @@ function ClientsList() {
             <Link to="new"><button>Adicionar</button></Link>
           </div>
         </div>
-        {clients.length === 0 ? (
+        {error && <div style={{ color: 'crimson', marginBottom: 12 }}>{error}</div>}
+        {loading ? (
+          <p>Carregando...</p>
+        ) : clients.length === 0 ? (
           <p>Nenhum cliente cadastrado.</p>
         ) : (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -82,4 +87,3 @@ function ClientsList() {
     </div>
   )
 }
-

@@ -1,13 +1,9 @@
 // API service for frontend
 // Uses VITE_API_URL environment variable (defaults to localhost:3000/api)
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+import type { Client } from '../components/Forms';
 
-export interface ApiResponse<T> {
-  data?: T;
-  error?: string;
-  message?: string;
-}
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 class ApiClient {
   private apiUrl: string;
@@ -55,17 +51,17 @@ class ApiClient {
   }
 
   // Auth endpoints
-  async login(email: string, password: string) {
-    return this.request('/auth/login', 'POST', { email, password });
+  async login(username: string, password: string) {
+    return this.request<{ token: string }>('POST', '/login', { username, password });
   }
 
   // Client endpoints
   async getClients() {
-    return this.request('/clients', 'GET');
+    return this.request<Client[]>('GET', '/clients');
   }
 
   async getClient(id: string) {
-    return this.request(`/clients/${id}`, 'GET');
+    return this.request<Client>('GET', `/clients/${id}`);
   }
 
   async createClient(data: {
@@ -73,18 +69,18 @@ class ApiClient {
     email: string;
     phone?: string;
   }) {
-    return this.request('/clients', 'POST', data);
+    return this.request<Client>('POST', '/clients', data);
   }
 
   async updateClient(
     id: string,
     data: { name?: string; email?: string; phone?: string }
   ) {
-    return this.request(`/clients/${id}`, 'PUT', data);
+    return this.request<Client>('PUT', `/clients/${id}`, data);
   }
 
   async deleteClient(id: string) {
-    return this.request(`/clients/${id}`, 'DELETE');
+    return this.request<void>('DELETE', `/clients/${id}`);
   }
 }
 
