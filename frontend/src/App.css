@@ -145,7 +145,7 @@ table tr td button {
   cursor: pointer;
 }
 table tr td button:first-child { background: #646cff; color: white }
-table tr td button:last-child { background: #eee; margin-left: 8px }
+table tr td button.MuiButton-root { margin-left: 8px }
 
 
 .client-container {
