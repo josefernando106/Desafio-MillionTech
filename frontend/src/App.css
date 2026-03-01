@@ -1,7 +1,4 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -83,4 +80,121 @@
 .login-card .secondary {
   background: #eee;
   color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: #1a1a2e;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.navbar-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: #646cff;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar-right span {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+.navbar-right button {
+  padding: 0.4rem 1rem;
+  border: 1px solid #646cff;
+  background: transparent;
+  color: #646cff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, color 0.2s;
+}
+.navbar-right button:hover {
+  background: #646cff;
+  color: #fff;
+}
+
+/* Clients table tweaks */
+table td, table th {
+  padding: 8px 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+table tr td button {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+table tr td button:first-child { background: #646cff; color: white }
+table tr td button.MuiButton-root { margin-left: 8px }
+
+
+.client-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.client-card {
+  width: 100%;
+  padding: 3rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  background: #fff;
+  margin: 1rem;
+}
+.client-card h2 {
+  margin: 0 0 1rem 0;
+}
+.client-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.client-card input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.client-card button {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #646cff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.client-card .secondary {
+  background: #eee;
+  color: #333;
+}
+.client-card .button-delete {
+  background: #ff4d4d;
+  color: white;
+}
+.client-card .button-delete:hover {
+  background: #fa1818;
+}
+.client-card button:hover {
+background: #464ffd;
 }

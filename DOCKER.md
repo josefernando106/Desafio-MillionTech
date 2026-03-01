@@ -12,7 +12,6 @@
 git clone <repo-url>
 cd Desafio\ MillionTech
 
-
 # Build e iniciar todos os serviços
 docker-compose up --build
 
@@ -21,7 +20,6 @@ docker-compose exec backend npm run seed
 ```
 
 **Acessar a aplicação:**
-
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3000/api
 - Credenciais: admin / admin
@@ -48,7 +46,6 @@ npm run dev
 ```
 
 **Acessar:**
-
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3000
 
@@ -125,7 +122,6 @@ VITE_API_URL=http://localhost:3000/api  # Frontend
 ## 🐛 Troubleshooting
 
 ### Erro: "Cannot connect to PostgreSQL"
-
 ```bash
 # Verificar se o PostgreSQL está saudável
 docker-compose ps
@@ -139,7 +135,6 @@ docker-compose up --build
 ```
 
 ### Erro: "Port 5432 already in use"
-
 ```bash
 # Matar processos na porta 5432 (Windows)
 Get-Process | where {$_.ProcessName -like "*postgres*"} | Stop-Process
@@ -149,7 +144,6 @@ lsof -ti:5432 | xargs kill -9
 ```
 
 ### Build falha no backend/frontend
-
 ```bash
 # Limpar cache de build
 docker-compose build --no-cache
@@ -181,14 +175,12 @@ docker logs --tail 100 desafio-backend
 ## 🚢 Deploy em Produção
 
 1. **Usar variáveis de ambiente seguras:**
-
    ```bash
    export JWT_SECRET=seu-secret-seguro
    export DB_PASS=sua-senha-segura
    ```
 
 2. **Configurar reverse proxy (Nginx):**
-
    ```nginx
    location / {
        proxy_pass http://localhost:5173;
@@ -199,6 +191,7 @@ docker logs --tail 100 desafio-backend
    ```
 
 3. **Usar volumes persistentes para banco de dados**
+   
 4. **Configurar health checks e auto-restart**
 
 ---
