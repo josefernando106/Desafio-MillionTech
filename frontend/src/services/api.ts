@@ -84,4 +84,8 @@ class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient();
+import { MockApiClient } from './mockApi';
+
+const useMock = import.meta.env.VITE_USE_MOCK === 'true';
+
+export const apiClient = useMock ? new MockApiClient() : new ApiClient();
