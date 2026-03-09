@@ -2,11 +2,11 @@
   "$schema": "https://schema.railpack.com",
   "steps": {
     "install": {
-      "commands": ["npm install"]
+      "commands": ["docker-compose up --build"]
     },
     "build": {
       "inputs": [{ "step": "install" }],
-      "commands": ["...", "./my-custom-build.sh"]
+      "commands": ["./my-custom-build.sh"]
     }
   },
   "deploy": {
