@@ -1,10 +1,4 @@
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { Client } from "./Forms";
 
 const styles = StyleSheet.create({
@@ -66,10 +60,10 @@ export default function ClientsPdfReport({ clients }: { clients: Client[] }) {
         </View>
 
         {/* Rows */}
-        {clients.map((c, i) => (
+        {clients.map((c: Client, i: number) => (
           <View
             key={c.id}
-            style={[styles.row, i % 2 !== 0 && styles.rowAlt]}
+            style={[styles.row, ...(i % 2 !== 0 ? [styles.rowAlt] : [])]}
             wrap={false}
           >
             <Text style={styles.colName}>{c.name}</Text>
