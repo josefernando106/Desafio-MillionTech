@@ -1,5 +1,8 @@
 # 🚀 Desafio MillionTech - Docker Setup
 
+# Hospedagem na vercel para teste - versão mocada
+https://desafio-million-tech.vercel.app/
+
 ## 📋 Pré-requisitos
 
 - Docker Desktop instalado ([Download](https://www.docker.com/products/docker-desktop))
