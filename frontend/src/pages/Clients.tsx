@@ -6,6 +6,8 @@ import ClientListView from "../components/ClientListView";
 import { apiClient } from "../services/api";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { pdf } from "@react-pdf/renderer";
+import ClientsPdfReport from "../components/ClientsPdfReport";
 
 export default function Clients() {
   return (
@@ -62,12 +64,30 @@ function ClientsList() {
             marginBottom: 12,
           }}
         >
-          <div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {clients.length > 0 && (
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "crimson", marginRight: 8 }}
+                onClick={async () => {
+                  const blob = await pdf(
+                    <ClientsPdfReport clients={clients} />,
+                  ).toBlob();
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "relatorio-clientes.pdf";
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+              >
+                Relatorio PDF
+              </Button>
+            )}
             <Link to="new">
-              <Button variant="contained">Relatorio PDF</Button>
-            </Link>
-            <Link to="new">
-              <Button variant="contained">Adicionar</Button>
+              <Button variant="contained" style={{ backgroundColor: "green" }}>
+                Adicionar
+              </Button>
             </Link>
           </div>
         </div>

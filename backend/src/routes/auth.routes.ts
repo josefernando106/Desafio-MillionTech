@@ -18,7 +18,7 @@ const controller = new AuthController();
  *             required: [username, password]
  *             properties:
  *               username: { type: string, example: "admin" }
- *               password: { type: string, example: "admin123" }
+ *               password: { type: string, example: "admin" }
  *     responses:
  *       200:
  *         description: OK
